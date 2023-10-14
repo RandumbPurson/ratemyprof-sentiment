@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("schoolID")
 parser.add_argument("-o", help="The output filename, should not include extension")
-parser.add_argument("-i", default=500, type=int, help="The max number of scroll iterations")
+parser.add_argument("-s", default=500, type=int, help="The max number of scroll iterations")
 parser.add_argument("--headless", default=True, help="Whether to run the chromedriver in headless mode")
 
 args = parser.parse_args()
@@ -17,7 +17,7 @@ def scrape_schools():
         headless=args.headless
     )
     scraper.find_click(".CCPAModal__StyledCloseButton-sc-10x9kq-2") # Closes cookies popup
-    scraper.expand_all(max_iters=args.i)
+    scraper.expand_all(max_iters=args.s)
     page = scraper.source()
     scraper.driver.quit()
 
