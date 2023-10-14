@@ -1,3 +1,7 @@
+# csv (std lib)
+# docs: https://docs.python.org/3/library/csv.html
+import csv
+
 # std lib
 import time
 
@@ -47,3 +51,9 @@ class RMPscraper:
     def __del__(self):
         self.driver.quit()
 
+def save_info(card_info, filename, SCHEMA):
+    with open(f"{filename}.csv", "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(SCHEMA)
+        writer.writerows(card_info)
+        
