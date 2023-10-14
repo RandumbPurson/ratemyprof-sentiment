@@ -32,6 +32,7 @@ def scrape_profs():
     school = proffesors.loc[0, "school"]
     professor_info = []
     i = 0
+    SCHEMA = []
     for _, prof in proffesors.iterrows():
         if args.i is not None and i > args.i:
             break
@@ -42,6 +43,9 @@ def scrape_profs():
             info, SCHEMA = scrape_prof(prof["prof_id"])
             professor_info.extend(info)
             i += 1
+        except KeyboardInterrupt as e:
+            print(f"Halting...\n{e}")
+
         except:
             print(f"Error getting professor data {prof}! Skipping for now...")
     
