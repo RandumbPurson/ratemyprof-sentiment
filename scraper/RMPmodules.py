@@ -12,7 +12,7 @@ RATING_ID_thumbs_up = "thumbs_up"
 RATING_ID_thumbs_down = "thumbs_down"
 RATING_CLS_helpful_num = "Thumbs__HelpTotalNumber-sc-19shlav-2 lihvHt"
 
-def get_ratings(page_source):
+def get_ratings(page_source, prof_id):
     soup = BeautifulSoup(page_source, features="lxml")
     ratings_list = soup.find(id="ratingsList")
     ratings = []
@@ -28,10 +28,10 @@ def get_ratings(page_source):
         thumbs_up = rating.find(id=RATING_ID_thumbs_up).find(class_=RATING_CLS_helpful_num).contents[0]
         thumbs_downs = rating.find(id=RATING_ID_thumbs_down).find(class_=RATING_CLS_helpful_num).contents[0]
 
-        #SCHEMA: course, date, quality, difficulty, comments, thumbs_up, thumbs_down
-        ratings.append([course, date, quality, difficulty, comments, thumbs_up, thumbs_downs])
+        #SCHEMA: prof_id, course, date, quality, difficulty, comments, thumbs_up, thumbs_down
+        ratings.append([prof_id, course, date, float(quality), float(difficulty), comments, int(thumbs_up), int(thumbs_downs)])
 
-    SCHEMA = ["course", "date", "quality", "difficulty", "comments", "thumbs_up", "thumbs_down"]
+    SCHEMA = ["prof_id", "course", "date", "quality", "difficulty", "comments", "thumbs_up", "thumbs_down"]
     return ratings, SCHEMA
 
 CARD_CLS = "TeacherCard__StyledTeacherCard-syjs0d-0"
@@ -50,7 +50,7 @@ def get_card_info(page_source):
         school = card.find(class_=CARD_CLS_school).contents[0]
         department = card.find(class_=CARD_CLS_department).contents[0]
         num_ratings = card.find(class_=CARD_CLS_num_rating).contents[0].split(" ")[0]
-        cards.append([name, prof_id, school, department, num_ratings])
+        cards.append([name, prof_id, school, department, int(num_ratings)])
 
     SCHEMA = ["name", "prof_id", "school", "department", "num_ratings"]
     return cards, SCHEMA
