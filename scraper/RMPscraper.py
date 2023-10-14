@@ -31,9 +31,8 @@ class RMPscraper:
     
     def expand_all(
         self, EXPAND_BTN_SEL = EXPAND_BTN_SEL,
-        max_iters=1000, scroll_factor=8, wait_time=2
+        max_iters=1000, scroll="window.scrollBy(0, window.innerHeight/8);", wait_time=2
     ):
-        scroll = f"window.scrollBy(0, window.innerHeight/{scroll_factor});"
         for i in range(max_iters):
             try:
                 self.find_click(EXPAND_BTN_SEL)
