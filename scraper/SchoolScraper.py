@@ -1,6 +1,3 @@
-# csv (std lib)
-# docs: https://docs.python.org/3/library/csv.html
-import csv
 
 # beautifulsoup
 # docs: https://beautiful-soup-4.readthedocs.io/en/latest/
@@ -23,17 +20,8 @@ def get_card_info(page_source):
         school = card.find(class_=CARD_CLS_school).contents[0]
         department = card.find(class_=CARD_CLS_department).contents[0]
         num_ratings = card.find(class_=CARD_CLS_num_rating).contents[0].split(" ")[0]
-        # SCHEMA: name, prof_id, school, department, num_ratings
         cards.append([name, prof_id, school, department, num_ratings])
 
-    return cards
+    SCHEMA = ["name", "prof_id", "school", "department", "num_ratings"]
+    return cards, SCHEMA
 
-
-# SCHEMA
-SCHEMA = ["name", "prof_id", "school", "department", "num_ratings"]
-def save_card_info(card_info, filename):
-    with open(f"{filename}.csv", "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(SCHEMA)
-        writer.writerows(card_info)
-        

@@ -34,11 +34,7 @@ def get_ratings(page_source):
 
         #SCHEMA: course, date, quality, difficulty, comments, thumbs_up, thumbs_down
         ratings.append([course, date, quality, difficulty, comments, thumbs_up, thumbs_downs])
-    return ratings    
 
-SCHEMA = ["course", "date", "quality", "difficulty", "comments", "thumbs_up", "thumbs_down"]
-def save_ratings(ratings, filename):
-    with open(f"{filename}.csv", "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(SCHEMA)
-        writer.writerows(ratings)
+    SCHEMA = ["course", "date", "quality", "difficulty", "comments", "thumbs_up", "thumbs_down"]
+    return ratings, SCHEMA
+
