@@ -35,18 +35,15 @@ class RMPscraper:
     
     def expand_all(
         self, EXPAND_BTN_SEL = EXPAND_BTN_SEL,
-        max_iters=1000, wait_time=2
+        max_iters=1000, scroll="window.scrollBy(0, window.innerHeight/8);", wait_time=2
     ):
         for i in range(max_iters):
-            time.sleep(wait_time)
             try:
-                close_button = self.driver.find_element(By.CSS_SELECTOR, EXPAND_BTN_SEL)
-                self.driver.execute_script("arguments[0].scrollIntoView();", close_button)
-                self.driver.execute_script("window.scrollBy(0, -window.innerHeight/4)")
-                close_button.click()
-            except Exception as e:
-                print(f"error expanding on iteration {i}: {e}")
-                self.driver.execute_script("window.scrollBy(0, window.innerHeight/4)")
+                self.find_click(EXPAND_BTN_SEL)
+            except:
+                pass
+            self.driver.execute_script(scroll)
+            time.sleep(wait_time)
 
     def source(self):
         return self.driver.page_source
