@@ -6,6 +6,10 @@ Session.vim
 *.csv
 runs/
 
+# Visualizations
+*.png
+*.jpg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
