@@ -19,8 +19,6 @@ def experiment(
     model = SVC(class_weight="balanced"),
     **kwargs
 ):
-    # setup
-    np.random.seed(12345)
     """
     Run a single experiment, printing 
 
