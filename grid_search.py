@@ -15,14 +15,28 @@ def custom_clf_report(y_test, y_test_pred):
     
 def experiment(
     X_train, y_train, X_test, y_test, 
-    param_grid = {"C": [0.1, 1, 10]}
+    param_grid = {"C": [0.1, 1, 10]},
+    model = SVC(class_weight="balanced"),
+    **kwargs
 ):
     # setup
     np.random.seed(12345)
-    svc = SVC(class_weight="balanced")
+    """
+    Run a single experiment, printing 
 
+    --- Parameters ---
+    X_train, y_train, X_test, y_test: training and testing features and labels
+    
+    param_grid: the grid of paramaters to pass to GridSearchCV; 
+        defaults to {"C": [0.1, 1, 10]}
+
+    model: the model to be passed to GridSearchCV as the estimator
+        defaults to SVC(class_weight="balanced")
+
+    **kwargs: keyword arguments are passed to GridSearchCV
+    """
     # run grid search
-    classifier = GridSearchCV(svc, param_grid, verbose=3).fit(X_train, y_train)
+    classifier = GridSearchCV(model, param_grid, verbose=1, **kwargs).fit(X_train, y_train)
     params = classifier.best_params_
     preds = classifier.best_estimator_.predict(X_test)
 
@@ -31,6 +45,6 @@ def experiment(
     print(classification_report(y_test, preds))
 
     # show confusion matrix
-    cm = confusion_matrix(y_test, y_test_pred)
+    cm = confusion_matrix(y_test, preds)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Negative", "Positive"])
     disp.plot()
